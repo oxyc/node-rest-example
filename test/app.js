@@ -3,10 +3,6 @@
 var app = require('../')
   , assert = require('should');
 
-// before(function() {
-//   app.listen(8000);
-// });
-
 describe('mongodb', function() {
   it ('should connect', function() {
     app.db.readyState.should.equal(1);
@@ -37,7 +33,3 @@ describe('User', function() {
     });
   });
 });
-
-// after(function() {
-//   app.close();
-// });

@@ -1,0 +1,22 @@
+{
+  "name": "datanat-project",
+  "description": "Datanät - Projekt",
+  "version": "0.0.1",
+  "author": [{ "name": "Oskar Schöldström" }, { "name": "Alex Fagerström" }],
+  "main" : "./index",
+  "bin": { "innebandy-server" : "./bin/server" },
+  "scripts": {
+    "tests" : "make test"
+  },
+  "dependencies": {
+    "commander": "*",
+    "restify": "*",
+    "mongoose": "*",
+    "crypto": "*"
+  },
+  "devDependencies": {
+    "docco": "*",
+    "mocha": "*",
+    "should": "*"
+  }
+}

@@ -1,0 +1,236 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Documentation</title>
+    <link rel="stylesheet" href="layout/styles.css" />
+  </head>
+  <body>
+     <h1>Innebandy Project - Test documentation</h1>
+<h1>TOC</h1>
+
+<ul>
+<li><a href="#mongodb">mongodb</a></li>
+<li><a href="#user">User</a></li>
+<li><a href="#authentication">Authentication</a></li>
+<li><a href="#player">Player</a></li>
+<li><a href="#statistics">statistics</a>
+<a name="" /></li>
+</ul>
+
+<p><a name="mongodb" /></p>
+
+<h1>mongodb</h1>
+
+<p>should connect.</p>
+
+<p><code>js
+app.db.readyState.should.equal(1);
+</code></p>
+
+<p><a name="user" /></p>
+
+<h1>User</h1>
+
+<p>should create valid user.</p>
+
+<p><code>js
+user = new app.User({ name: 'oxy', password: 'test' });
+user.save(function(err, doc) {
+  if (err) return done(err);
+  user.name.should.equal('oxy');
+  user.authenticate('test').should.be.true;
+  done();
+});
+</code></p>
+
+<p>should delete user.</p>
+
+<p><code>js
+user.remove(function (err, doc) {
+  if (err) return done(err);
+  done();
+});
+</code></p>
+
+<p>list users.</p>
+
+<p><code>js
+app.User.find().exec(function(err, doc) {
+  doc.should.be.a('object');
+  done();
+});
+</code></p>
+
+<p><a name="authentication" /></p>
+
+<h1>Authentication</h1>
+
+<p>should send 403 with wrong authorization.</p>
+
+<p><code>js
+client.basicAuth(username, 'wrongPass');
+client.get('/players', function(err, req, res) {
+  if (res.statusCode === 403) done();
+});
+</code></p>
+
+<p>should validate authorization.</p>
+
+<p><code>js
+client.basicAuth(username, password);
+client.get('/players', function(err, req, res) {
+  if (err) return done(err);
+  done();
+});
+</code></p>
+
+<p>should validate hard coded users.</p>
+
+<p><code>js
+var hardcoded = require('../config.js').http_auth[0];
+client.basicAuth(hardcoded.username, hardcoded.password);
+client.get('/players', function(err, req, res) {
+  if (err) return done(err);
+  done();
+});
+</code></p>
+
+<p><a name="player" /></p>
+
+<h1>Player</h1>
+
+<p>should be able to create player.</p>
+
+<p><code>js
+client.post('/players', { name: 'RandomPlayer2' }, function(err, req, res) {
+  if (err) return done(err);
+  res.should.have.status(201);
+  res.should.be.json;
+  JSON.parse(res.body).name.should.equal('RandomPlayer2');
+  done();
+});
+after(function(done) {
+  app.Player.find({ name: 'RandomPlayer2' }).remove(done);
+});
+</code></p>
+
+<p>should be able to list players.</p>
+
+<p>```js
+client.get('/players', function(err, req, res) {
+  if (err) return done(err);
+  var body = JSON.parse(res.body)
+    .filter(function(el) { return el.name === 'RandomPlayer'; });</p>
+
+<p>res.should.have.status(200);
+  res.should.be.json;
+  body.should.have.length(1);
+  body[0].should.not.have.property('goals');
+  body[0].should.not.have.property('_id');
+  done();
+});
+```</p>
+
+<p>should be able to get single player.</p>
+
+<p><code>js
+client.get('/players/RandomPlayer', function(err, req, res) {
+  if (err) return done(err);
+  res.should.have.status(200);
+  res.should.be.json;
+  JSON.parse(res.body)
+    .goals.should.equal(0);
+  done();
+});
+</code></p>
+
+<p>should be able to update player.</p>
+
+<p><code>js
+client.put('/players/RandomPlayer', { name: 'Oskar', goals: 1 }, function(err, req, res) {
+  if (err) return done(err);
+  res.should.have.status(200);
+  res.should.be.json;
+  JSON.parse(res.body)
+    .name.should.equal('Oskar');
+  JSON.parse(res.body)
+    .goals.should.equal(1);
+  done();
+});
+</code></p>
+
+<p>should be able to delete player.</p>
+
+<p><code>js
+client.del('/players/RandomPlayer', function(err, req, res) {
+  if (err &amp;&amp; err.statusCode !== 410) return done(err);
+  res.should.have.status(410);
+  res.body.should.be.empty;
+  done();
+});
+</code></p>
+
+<p>should accept uri encoded players.</p>
+
+<p>```js
+var encodedPlayer;</p>
+
+<p>encodedPlayer = new app.Player({ name: 'Alex Fagerström', goals: 0, assists: 2, games: 1 });
+encodedPlayer.save(function() {
+  client.get('/players/' + encodeURIComponent('Alex Fagerström'), function(err, req, res) {
+    encodedPlayer.remove();
+    if (err) return done(err);
+    res.should.have.status(200);
+    res.should.be.json;
+    done();
+  });
+});
+```</p>
+
+<p><a name="statistics" /></p>
+
+<h1>statistics</h1>
+
+<p>should be able to get statistics.</p>
+
+<p><code>js
+client.get('/statistics', function(err, req, res) {
+  if (err) return done(err);
+  res.should.have.status(200);
+  done();
+});
+</code></p>
+
+<p>should be able to update statistics.</p>
+
+<p><code>js
+var update = [
+    { name: 'Oskar', goals: 1, assists: 5 }
+  , { name: 'Alex', goals: 2, assists: 4 }
+  , { name: 'Göran', goals: 3}
+];
+client.post('/statistics', update, function(err, req, res) {
+  if (err) return done(err);
+  res.should.have.status(200);
+  var body = JSON.parse(res.body);
+  var found = false;
+  body.forEach(function(el) {
+    switch (el.name) {
+      case 'Oskar':
+        found = true;
+        el.goals.should.equal(2);
+        el.assists.should.equal(10);
+        el.games.should.equal(3);
+        break;
+      case 'Göran':
+        el.goals.should.equal(3);
+        el.assists.should.equal(0);
+        break;
+    }
+  });
+  found.should.be.true;
+  done();
+});
+</code></p>
+  </body>
+</html>

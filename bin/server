@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+
+var app = require('../index')
+  , program = require('commander')
+  , pkg = require('../package.json')
+  , version = pkg.version;
+
+program
+  .version(version)
+  .parse(process.argv);
+
+app.listen(8000, function() {
+  console.log('%s listening at %s', app.name, app.url);
+});
+
+/* vim: set sw=2 ts=2 et tw=80 ft=javascript : */

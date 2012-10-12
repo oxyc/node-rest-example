@@ -1,0 +1,21 @@
+{
+  "curly": false,
+  "eqeqeq": true,
+  "forin": false,
+  "immed": true,
+  "indent": 2,
+  "latedef": false,
+  "newcap": true,
+  "noarg": true,
+  "noempty": true,
+  "nonew": true,
+  "regexp": true,
+  "undef": true,
+  "trailing": true,
+  "sub": true,
+  "boss": true,
+  "eqnull": true,
+  "laxcomma": true,
+  "es5": true,
+  "node": true
+}

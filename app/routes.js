@@ -38,7 +38,7 @@ function defineRoutes(app, restify, fn) {
       .select('name -_id')
       .exec(function(err, doc) {
         if (err) return next(err);
-        if (!doc) return next(new restify.ResourceNotFoundError());
+        if (!doc || doc.length === 0) return next(new restify.ResourceNotFoundError());
         res.header('Access-Control-Allow-Methods', 'GET, POST');
         res.json(doc);
         next();

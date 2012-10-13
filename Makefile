@@ -55,8 +55,7 @@ install: build mongodb-start server
 clean:
 	@rm -rf app-cov *.tar.gz
 
-package:
-	@$(MAKE) docs clean
+package: docs clean
 	@tar czf package.tar.gz ./*
 
 test: test-spec
@@ -67,4 +66,4 @@ test-spec:
 			--reporter $(REPORTER) \
 			test/*.js
 
-.PHONY: test mongodb-start
+.PHONY: test mongodb-start docs clean package

@@ -13,9 +13,12 @@ build: lint
 lint:
 	@yeoman lint
 
-docs: docs-coverage docs-tests docs-docco
+docs: docs-coverage docs-tests docs-docco docs-dot
 
 docs-tests: test-md $(patsubst %.md,%.html,$(wildcard docs/*.md))
+
+docs-dot:
+	dot -T png -O docs/dot/*.dot
 
 test-md:
 	@$(MAKE) -s test REPORTER=markdown > docs/tests.md

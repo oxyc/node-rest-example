@@ -1,0 +1,17 @@
+digraph class_diagram {
+  node [fontname=Sans,fontsize=14]
+
+  node [shape=Mrecord, fillcolor=lightskyblue, style=filled];
+  user [label="{<p>[ Model: User ]|name|hashed_password|salt|password|authenticate()|makeSalt()|encryptPassword()}"];
+  player [label="{<p>[ Model: Player ]|name|games|goals|assists}"];
+  node [shape=Mrecord, fillcolor=orange, style=filled];
+  app [label="{<p>[ Application ]|<u>User|<pl>Player|authorize()}"];
+  node [shape=Mrecord, fillcolor=beige, style=filled];
+  router [label="{<p>[ Router ]|defineRoutes()|playersGetAll()|playersCreate()|playersGet()|playersUpdate()|playersDelete()|statisticsSave()|statisticsGet()}"];
+  utils [label="{<p>[ Utils ]|isBetween()|extend()}"];
+
+  edge [arrowhead=none]
+  app:u -> user
+  app:pl -> player
+  app:p -> router
+}

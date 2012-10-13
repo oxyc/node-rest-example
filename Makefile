@@ -26,7 +26,7 @@ docs-coverage:
 
 %.html: %.md
 	@cat docs/layout/head.html > $@
-	@markdown $< >> $@
+	@./node_modules/marked/bin/marked --gfm $< >> $@
 	@cat docs/layout/foot.html >> $@
 
 docs-docco:

@@ -17,6 +17,7 @@
   "devDependencies": {
     "docco": "*",
     "mocha": "*",
-    "should": "*"
+    "should": "*",
+    "marked": "*"
   }
 }

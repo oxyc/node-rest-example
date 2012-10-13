@@ -14,6 +14,13 @@ before(function(done) {
 });
 
 describe('Authentication', function() {
+  var player;
+
+  beforeEach(function(done) {
+    player = new app.Player({ name: 'RandomPlayer', goals: 0, assists: 2, games: 1 });
+    player.save(done);
+  });
+
   it('should send 403 with wrong authorization', function(done) {
     client.basicAuth(username, 'wrongPass');
     client.get('/players', function(err, req, res) {
@@ -23,7 +30,7 @@ describe('Authentication', function() {
   it('should validate authorization', function(done) {
     client.basicAuth(username, password);
     client.get('/players', function(err, req, res) {
-      if (err) return done(err);
+      if (err && err.statusCode !== 404) return done(err);
       done();
     });
   });
@@ -31,9 +38,13 @@ describe('Authentication', function() {
     var hardcoded = require('../config.js').http_auth[0];
     client.basicAuth(hardcoded.username, hardcoded.password);
     client.get('/players', function(err, req, res) {
-      if (err) return done(err);
+      if (err && err.statusCode !== 404) return done(err);
       done();
     });
+  });
+
+  afterEach(function(done) {
+    player.remove(done);
   });
 });
 
@@ -70,6 +81,22 @@ describe('Player', function() {
       body[0].should.not.have.property('goals');
       body[0].should.not.have.property('_id');
       done();
+    });
+  });
+  it('should be able to filter player list', function(done) {
+    var counter = 2;
+    client.get('/players?assists=1', function(err, req, res) {
+      if (err && err.statusCode !== 404) return done(err);
+      res.should.have.status(404);
+      res.should.be.json;
+      if (--counter === 0) done();
+    });
+    client.get('/players?assists=2', function(err, req, res) {
+      if (err) return done(err);
+      JSON.parse(res.body)[0].name.should.equal('RandomPlayer');
+      res.should.have.status(200);
+      res.should.be.json;
+      if (--counter === 0) done();
     });
   });
   it('should be able to get single player', function(done) {
@@ -146,6 +173,16 @@ describe('statistics', function() {
     client.get('/statistics', function(err, req, res) {
       if (err) return done(err);
       res.should.have.status(200);
+      done();
+    });
+  });
+  it('should be able to filter statistics', function(done) {
+    client.get('/statistics?name=Oskar', function(err, req, res) {
+      if (err) return done(err);
+      res.should.have.status(200);
+      var body = JSON.parse(res.body);
+      body.should.have.length(1);
+      body[0].name.should.equal('Oskar');
       done();
     });
   });

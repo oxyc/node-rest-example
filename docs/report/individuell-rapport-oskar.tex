@@ -1,0 +1,84 @@
+% vim: tw=78:ts=2:sw=2:et:fdm=marker:wrap
+\def\TITLE{Individuell redog\"{o}relse f\"{o}r projektet}
+\def\AUTHOR{Oskar Sch\"{o}ldstr\"{o}m}
+
+\documentclass[swedish,a4paper]{article}
+
+\usepackage[left=2cm,top=2cm,right=2cm,bottom=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[swedish]{babel}
+\usepackage[pdftex]{hyperref} % Hyperlinks
+\usepackage{graphicx}
+\usepackage{cancel}
+\usepackage{setspace}
+\usepackage{array}
+
+\hypersetup{pdftitle={\TITLE}}
+\hypersetup{pdfauthor={\AUTHOR}}
+\hypersetup{pdfkeywords={}}
+\hypersetup{pdfsubject={\TITLE}}
+\hypersetup{colorlinks}
+\setcounter{secnumdepth}{-1}
+
+\title{\TITLE}
+\author{\AUTHOR}
+
+\pagestyle{myheadings}
+\markright{Fortsättningskurs i datanät (2012-2013)}
+
+\begin{document}
+
+\maketitle
+
+\section{Kommentera projektet}
+\textbf{Var projektet intressant? Hade du tillräckligt med bakgrundskunskap för att kunna göra detta projekt? Fick du tillräckligt med handledning?}
+\\
+\\
+Projektet var något lätt men jag njöt till 100\% att äntligen få välja språk
+valfritt.
+
+\section{Arbetsfördelning och utvärdering (fyll i detta om du arbetat tillsammans med
+någon annan}
+
+\begin{enumerate}
+  \item \textbf{Hur var rollerna fördelade i projektgruppen? Vilken roll hade du? Vad var du i första hand ansvarig för?}\\
+    \\
+    Vi distribuerade arbetet så att jag tog hand om node.js Backenden, medan
+    Alex knöt klientsidan till vår backend samt skapade certifikat för MongoDB
+    och Restify (jag skrev script för det senare när vi debuggade).
+  \item \textbf{Vilka personliga resultat nådde du?}\\
+    \\
+    2 Gick enligt planerna
+  \item \textbf{På vilket sätt har projektgruppen under arbetets gång skött den
+    interna kommunikationen? Har ni varit tillräckligt systematiska för att nå
+  de uppställda målen?} \\
+    \\
+    3 Vi började med att definiera hur strukturen skulle byggas upp samt
+    vilken RPC API som skulle användas, efter det kunde vi arbeta avkilt enda
+    tills SSL kom in i bilden under vilken tid vi samarbetade.
+  \item \textbf{Är du nöjd med det sätt din grupp jobbat? Hur fungerade
+    samarbetet?}\\
+    \\
+    4 Fungerat bra
+  \item \textbf{Vilket vitsord ger du din egen och dina kollegers insats i
+    projektet (0-5), motivera?}\\
+    \\
+    5 och 5. Jag ser inte hur något kunde ha förbättrats.
+\end{enumerate}
+
+\section{Kommentera Kursen}
+
+\textbf{Vad var bra i kursen? Vad var dåligt i kursen? Vad skulle du vilja
+  ändra på? Ordet fritt! (eventuell negativ kritik påverkar inte vitsordet)}
+\\
+\\
+Java börjar bli något trist, men gillade starkt att vi fick göra projektet
+samt sista övningar i valfritt språk.
+
+Förövrigt tycker jag det var ganska grundläggande information. Exempelvis
+har vi ej gått igenom vad REST egentligen innebär. 95\% av dagens RESTful
+tjänster är inte RESTful, de är någon form av RPCn. Roy Fielding
+ryser\ldots
+
+\end{document}

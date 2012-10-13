@@ -18,7 +18,11 @@ docs: docs-coverage docs-tests docs-docco docs-dot
 docs-tests: test-md $(patsubst %.md,%.html,$(wildcard docs/*.md))
 
 docs-dot:
-	dot -T png -O docs/dot/*.dot
+	@dot -T png -O docs/dot/*.dot
+	@for file in docs/dot/*.dot.png; do mv $$file $${file%.dot.png}.png; done
+
+report:
+	@$(MAKE) -C docs/report
 
 test-md:
 	@$(MAKE) -s test REPORTER=markdown > docs/tests.md
@@ -58,6 +62,7 @@ install: build mongodb-start server
 
 clean:
 	@rm -rf app-cov *.tar.gz
+	@$(MAKE) -C docs/report clean
 
 package: docs clean
 	@tar czf package.tar.gz ./*

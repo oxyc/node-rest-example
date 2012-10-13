@@ -21,7 +21,7 @@ docs-dot:
 	@dot -T png -O docs/dot/*.dot
 	@for file in docs/dot/*.dot.png; do mv $$file $${file%.dot.png}.png; done
 
-report:
+docs-report: docs-dot
 	@$(MAKE) -C docs/report
 
 test-md:

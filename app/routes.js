@@ -27,6 +27,8 @@ function defineRoutes(app, restify, fn) {
   //
   // ### Return a list of player names.
   //
+  // This end point supports query filter eg. `/players?assists=3`
+  //
   // The response will have `200 OK` status code.
   //
   //     client.get('/players', fn);
@@ -128,6 +130,8 @@ function defineRoutes(app, restify, fn) {
   }
 
   // ### Return a list of all player statistics
+  //
+  // This end point supports query filter eg. `/statistics?name=Oskar`
   //
   // The response will have `200 OK` status code on success and a `404
   // Resource Not Found` on failure.

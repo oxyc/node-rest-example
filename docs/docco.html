@@ -107,6 +107,8 @@ callback as if nothing had happened.</p>             </td>             <td class
 
 <h3>Return a list of player names.</h3>
 
+<p>This end point supports query filter eg. <code>/players?assists=3</code></p>
+
 <p>The response will have <code>200 OK</code> status code.</p>
 
 <pre><code>client.get('/players', fn);
@@ -191,6 +193,8 @@ Resource Not Found</code> on failure.</p>
         <span class="nx">next</span><span class="p">();</span>
       <span class="p">});</span>
   <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-26">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-26">&#182;</a>               </div>               <h3>Return a list of all player statistics</h3>
+
+<p>This end point supports query filter eg. <code>/statistics?name=Oskar</code></p>
 
 <p>The response will have <code>200 OK</code> status code on success and a <code>404
 Resource Not Found</code> on failure.</p>

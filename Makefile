@@ -65,7 +65,7 @@ clean:
 	@$(MAKE) -C docs/report clean
 
 package: docs clean
-	@tar czf package.tar.gz ./*
+	@tar czf package.tar.gz --exclude=.git ./*
 
 test: test-spec
 

@@ -8,9 +8,10 @@ CERT=cert
 
 all: build mongodb-start
 
-build:
-	@yeoman lint
+build: lint
 
+lint:
+	@yeoman lint
 
 docs: docs-coverage docs-tests docs-docco
 
@@ -66,4 +67,7 @@ test-spec:
 			--reporter $(REPORTER) \
 			test/*.js
 
-.PHONY: test mongodb-start docs clean package
+test-all: lint
+	@$(MAKE) test REPORTER=dot
+
+.PHONY: test test-all test-spec mongodb-start docs clean package

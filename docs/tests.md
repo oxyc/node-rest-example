@@ -62,7 +62,7 @@ should validate authorization.
 ```js
 client.basicAuth(username, password);
 client.get('/players', function(err, req, res) {
-  if (err) return done(err);
+  if (err && err.statusCode !== 404) return done(err);
   done();
 });
 ```
@@ -73,7 +73,7 @@ should validate hard coded users.
 var hardcoded = require('../config.js').http_auth[0];
 client.basicAuth(hardcoded.username, hardcoded.password);
 client.get('/players', function(err, req, res) {
-  if (err) return done(err);
+  if (err && err.statusCode !== 404) return done(err);
   done();
 });
 ```
@@ -109,6 +109,25 @@ client.get('/players', function(err, req, res) {
   body[0].should.not.have.property('goals');
   body[0].should.not.have.property('_id');
   done();
+});
+```
+
+should be able to filter player list.
+
+```js
+var counter = 2;
+client.get('/players?assists=1', function(err, req, res) {
+  if (err && err.statusCode !== 404) return done(err);
+  res.should.have.status(404);
+  res.should.be.json;
+  if (--counter === 0) done();
+});
+client.get('/players?assists=2', function(err, req, res) {
+  if (err) return done(err);
+  JSON.parse(res.body)[0].name.should.equal('RandomPlayer');
+  res.should.have.status(200);
+  res.should.be.json;
+  if (--counter === 0) done();
 });
 ```
 
@@ -176,6 +195,19 @@ should be able to get statistics.
 client.get('/statistics', function(err, req, res) {
   if (err) return done(err);
   res.should.have.status(200);
+  done();
+});
+```
+
+should be able to filter statistics.
+
+```js
+client.get('/statistics?name=Oskar', function(err, req, res) {
+  if (err) return done(err);
+  res.should.have.status(200);
+  var body = JSON.parse(res.body);
+  body.should.have.length(1);
+  body[0].name.should.equal('Oskar');
   done();
 });
 ```

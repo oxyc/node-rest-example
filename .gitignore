@@ -3,3 +3,4 @@ app-cov
 *.1
 *.out
 *.tar.gz
+*.log

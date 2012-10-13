@@ -4,6 +4,7 @@
     <meta charset="utf-8"/>
     <title>Documentation</title>
     <link rel="stylesheet" href="layout/styles.css" />
+    <link rel="stylesheet" href="layout/prism.css" />
   </head>
   <body>
      <h1>Innebandy Project - Test documentation</h1>
@@ -198,5 +199,11 @@ client.post(&#39;/statistics&#39;, update, function(err, req, res) {
   done();
 });</code></pre>
 
+    <script>
+      Array.prototype.slice
+        .call(document.getElementsByClassName('lang-js'))
+        .forEach(function (el) { el.className = 'lang-javascript'; });
+    </script>
+    <script src="layout/prism.js"></script>
   </body>
 </html>

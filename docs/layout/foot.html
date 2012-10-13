@@ -1,2 +1,8 @@
+    <script>
+      Array.prototype.slice
+        .call(document.getElementsByClassName('lang-js'))
+        .forEach(function (el) { el.className = 'lang-javascript'; });
+    </script>
+    <script src="layout/prism.js"></script>
   </body>
 </html>

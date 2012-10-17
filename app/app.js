@@ -68,10 +68,6 @@ models.defineModels(db, mongoose, function() {
 
 routes.defineRoutes(app, restify);
 
-app.on('after', function(req) {
-  console.log(req.method + ' ' + req.path + ': ' + req._body);
-});
-
 // Start the server and let's do it!
 if (!module.parent) {
   app.listen(config.port || 8000, function() {

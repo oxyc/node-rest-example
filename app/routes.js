@@ -163,6 +163,7 @@ function defineRoutes(app, restify, fn) {
   //
   function statisticsSave(req, res, next) {
     var data = {};
+    if (!req.body.length) return next(new restify.MissingParameterError());
     req.body.forEach(function(el) {
       data[el.name] = el; delete data[el.name].name;
     });

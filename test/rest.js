@@ -215,7 +215,6 @@ describe('statistics', function() {
       done();
     });
   });
-
   afterEach(function(done) {
     var length = data.length;
     data.forEach(function(data) {
